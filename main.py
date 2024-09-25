@@ -1,11 +1,12 @@
 from tkinter import *
 from tkinter import ttk
-
+from tkinter import messagebox
+import re
 # setting
 root = Tk()
 icon = PhotoImage(file="icon.png")
 root.iconphoto(True, icon)
-root.title("Contas a Pagar")
+root.title("Boletos")
 
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
@@ -32,5 +33,49 @@ combo2 = ttk.Combobox(frm, values=["tipo 1", "tipo 2", "tipo 3"], state="readonl
 combo2.grid(column=1, row=0)
 combo2.set("selecione o tipo de compra")
 
+# validation
 
+def validadeDateFormat(char, entry):
+    if entry == "":
+        return True
+    
+    pattern = r"^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/([0-9]{4})$"
+    if re.match(pattern, entry):
+        return True
+    else:
+        False
+
+def validadeValueFormat(char, entry):
+    if entry == "":
+        return True
+    
+    pattern = r"^\d+,(\d{2})$"
+    
+    if re.match(pattern, entry):
+        return True
+    else:
+        False
+
+def onSubmit():
+    value = entry3.get()
+    if validadeValueFormat(None, value):
+        messagebox.showinfo("O valor está no formato correto")
+    else:
+        messagebox.showerror("O valor não está no formato correto")
+
+vcmd = (root.register(validadeDateFormat), "%S", "%P")
+vcmd2 = (root.register(validadeDateFormat), "%S", "%P")
+# entry 1
+
+entry1 = ttk.Entry(frm, validate="key", validatecommand=vcmd)
+entry1.grid(column=0, row=1)
+
+entry2 = ttk.Entry(frm, validate="key", validatecommand=vcmd)
+entry2.grid(column=1, row=1)
+
+entry3 = ttk.Entry(frm, validate="key", validatecommand=vcmd2)
+entry3.grid(column=2, row=1)
+
+submit_btn = ttk.Button(root, text="Validar Número", command=onSubmit)
+submit_btn.grid (column=0, row=2)
 root.mainloop()
