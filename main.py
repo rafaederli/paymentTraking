@@ -22,15 +22,16 @@ root.geometry(f"{window_width}x{window_height}+{x_coord}+{y_coord}")
 # frame 1
 frm = ttk.Frame(root, padding=10)
 frm.grid()
+root.grid_columnconfigure(0, weight=1)
 
 # dropdown list 1
-combo1 = ttk.Combobox(frm, values=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "exec"], state="readonly")
-combo1.grid(column=0,row=0)
+combo1 = ttk.Combobox(root, values=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "exec"], state="readonly")
+combo1.grid(column=0,row=0, sticky="ew", padx=10, pady=10)
 combo1.set("selecione o beneficiário")
 
 # dropdown list 2
-combo2 = ttk.Combobox(frm, values=["tipo 1", "tipo 2", "tipo 3"], state="readonly")
-combo2.grid(column=1, row=0)
+combo2 = ttk.Combobox(root, values=["tipo 1", "tipo 2", "tipo 3"], state="readonly")
+combo2.grid(column=1, row=1)
 combo2.set("selecione o tipo de compra")
 
 # validation
@@ -67,14 +68,14 @@ vcmd = (root.register(validadeDateFormat), "%S", "%P")
 vcmd2 = (root.register(validadeDateFormat), "%S", "%P")
 # entry 1
 
-entry1 = ttk.Entry(frm, validate="key", validatecommand=vcmd)
-entry1.grid(column=0, row=1)
+entry1 = ttk.Entry(root, validate="key", validatecommand=vcmd)
+entry1.grid(column=0, row=2)
 
-entry2 = ttk.Entry(frm, validate="key", validatecommand=vcmd)
-entry2.grid(column=1, row=1)
+entry2 = ttk.Entry(root, validate="key", validatecommand=vcmd)
+entry2.grid(column=1, row=2)
 
-entry3 = ttk.Entry(frm, validate="key", validatecommand=vcmd2)
-entry3.grid(column=2, row=1)
+entry3 = ttk.Entry(root, validate="key", validatecommand=vcmd2)
+entry3.grid(column=2, row=2)
 
 submit_btn = ttk.Button(root, text="Validar Número", command=onSubmit)
 submit_btn.grid (column=0, row=2)
